@@ -3,3 +3,4 @@ diffusers
 torch
 pandas
 accelerate
+streamlit
