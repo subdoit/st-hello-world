@@ -13,8 +13,12 @@ import json
 def load_model():
     euler_scheduler = EulerAncestralDiscreteScheduler.from_pretrained("CompVis/stable-diffusion-v1-4", subfolder="scheduler")
     model_id = "darkstorm2150/Protogen_x3.4_Official_Release"
-    pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16, scheduler=euler_scheduler, safety_checker=None) # float 16 for GPU, 32 for CPU
-    pipe = pipe.to("cuda") # Cuda for GPU, or CPU
+    if torch.cuda.is_available():
+        pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16, scheduler=euler_scheduler, safety_checker=None)
+        pipe = pipe.to("cuda")
+    else:
+            pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float32, scheduler=euler_scheduler, safety_checker=None)
+            pipe = pipe.to("cpu")
     pipe.enable_attention_slicing()
     return pipe
 
