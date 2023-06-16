@@ -9,7 +9,7 @@ COPY requirements.txt app/requirements.txt
 
 #install all requirements in requirements.txt
 RUN pip install -r app/requirements.txt
-RUN python -c "from diffusers import StableDiffusionPipeline, EulerAncestralDiscreteScheduler; euler_scheduler = EulerAncestralDiscreteScheduler.from_pretrained('CompVis/stable-diffusion-v1-4', subfolder='scheduler'); StableDiffusionPipeline.from_pretrained('darkstorm2150/Protogen_x3.4_Official_Release', scheduler=euler_scheduler)"
+RUN python3 -c "from diffusers import StableDiffusionPipeline, EulerAncestralDiscreteScheduler; euler_scheduler = EulerAncestralDiscreteScheduler.from_pretrained('CompVis/stable-diffusion-v1-4', subfolder='scheduler'); StableDiffusionPipeline.from_pretrained('darkstorm2150/Protogen_x3.4_Official_Release', scheduler=euler_scheduler)"
 
 #Copy all files in current directory into app directory
 COPY . /app
